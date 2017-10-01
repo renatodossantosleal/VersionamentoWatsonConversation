@@ -28,7 +28,7 @@ var params = {
     export: true
 };
   
-const versioning_db = cloudant.db.use('teste_conversation');
+const versioning_db = cloudant.db.use('{nome_banco}');
   
 function main() {
     return new Promise(function(resolve, reject){
