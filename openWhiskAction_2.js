@@ -12,28 +12,30 @@
 var Watson = require("watson-developer-cloud");
 var Cloudant = require('cloudant');
     
-function main() {
+function main(params) {
 
     var conversation = new Watson.ConversationV1({
-        username: 'params.WDC_USERNAME',
-        password: 'params.WDC_PASSWORD',
+        username: params.WDC_USERNAME,
+        password: params.WDC_PASSWORD,
         version_date: '2017-05-26'
     });
       
     const cloudant = Cloudant({
-        account: 'params.CLOUDANT_ACCOUNT',
-        password: 'params.CLOUDANT_PASSWORD'
+        account: params.CLOUDANT_ACCOUNT,
+        password: params.CLOUDANT_PASSWORD
     });
       
-    var params = {
-        workspace_id: 'params.WDC_WORKSPACEID',
+    var wdc_params = {
+        workspace_id: params.WDC_WORKSPACEID,
         export: true
     };
+    
+    console.log(JSON.stringify(params))
 
-    const versioning_db = cloudant.db.use('params.CLOUDANT_DBNAME');
+    const versioning_db = cloudant.db.use(params.CLOUDANT_DBNAME);
 
     return new Promise(function(resolve, reject){
-        conversation.getWorkspace(params, function(err, response) {
+        conversation.getWorkspace(wdc_params, function(err, response) {
             if (err) return reject(err);
             else {
                 var d = new Date();
